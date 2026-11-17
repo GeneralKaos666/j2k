@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     implementation(libs.coroutines.core)
-    implementation(projects.j2kIntellijEnv) {
+    api(projects.j2kIntellijEnv) {
         targetConfiguration = "shadow"
     }
 
