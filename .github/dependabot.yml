@@ -14,10 +14,10 @@ registries:
     url: https://cache-redirector.jetbrains.com/intellij-dependencies
   kotlin-ide:
     type: maven-repository
-    url: https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide
+    url: https://packages.jetbrains.team/maven/p/kt/kotlin-ide
   kotlin-ide-deps:
     type: maven-repository
-    url: https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide-plugin-dependencies
+    url: https://packages.jetbrains.team/maven/p/kt/kotlin-ide-plugin-dependencies
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -32,6 +32,18 @@ updates:
     assignees:
       - "hfhbd"
     rebase-strategy: "disabled"
+    ignore:
+      # Transitive IntelliJ platform artifacts: advisories are reported for them,
+      # but no version in this build declares them, so the updater fails with
+      # security_update_dependency_not_found. Their versions follow the pinned
+      # IntelliJ/Kotlin IDE build instead.
+      - dependency-name: "org.jsoup:jsoup"
+      - dependency-name: "com.fasterxml.jackson.core:jackson-core"
+      - dependency-name: "com.fasterxml.jackson.core:jackson-databind"
+      - dependency-name: "org.apache.logging.log4j:log4j-core"
+      - dependency-name: "io.opentelemetry:opentelemetry-api"
+      - dependency-name: "org.bouncycastle:bcprov-jdk18on"
+      - dependency-name: "com.google.guava:guava"
     registries:
       - maven-central
       - gradle
