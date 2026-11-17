@@ -81,6 +81,17 @@ class J2KTest {
 }
 
         """.trimIndent()
+                ),
+                KotlinFile(
+                    "MyOtherJavaClass", "bar",
+                    """package bar
+ class MyOtherJavaClass () {
+     fun foo() {
+        MyJavaClass().testing()
+    }
+}
+
+        """.trimIndent()
                 )
             ),
             kotlinFiles
