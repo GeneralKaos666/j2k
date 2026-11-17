@@ -43,5 +43,5 @@ idea = ["idea-core-impl", "idea-project-model-impl", "idea-analysis-impl", "idea
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-shadow = { id = "com.gradleup.shadow", version = "9.6.1" }
+shadow = { id = "com.gradleup.shadow", version = "8.3.11" }
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "1.3.0" }

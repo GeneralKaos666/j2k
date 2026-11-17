@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    id("java-library")
     id("maven-publish")
     id("signing")
 }
@@ -12,9 +12,9 @@ java {
 publishing {
     publications.withType<MavenPublication>().configureEach {
         pom {
-            name.set("app.softwork KOBOL")
-            description.set("A Cobol to Kotlin converter")
-            url.set("https://github.com/hfhbd/kobol")
+            name.set(project.name)
+            description.set("Java to Kotlin converter built on JetBrains' new J2K")
+            url.set("https://github.com/hfhbd/j2k")
             licenses {
                 license {
                     name.set("The Apache License, Version 2.0")
@@ -29,9 +29,9 @@ publishing {
                 }
             }
             scm {
-                connection.set("scm:git://github.com/hfhbd/kobol.git")
-                developerConnection.set("scm:git://github.com/hfhbd/kobol.git")
-                url.set("https://github.com/hfhbd/kobol")
+                connection.set("scm:git://github.com/hfhbd/j2k.git")
+                developerConnection.set("scm:git://github.com/hfhbd/j2k.git")
+                url.set("https://github.com/hfhbd/j2k")
             }
         }
     }

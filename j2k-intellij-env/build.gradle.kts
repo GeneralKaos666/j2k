@@ -73,20 +73,29 @@ tasks.shadowJar {
     archiveClassifier.set("")
     configurations = listOf(project.configurations.shadow.get())
 
-    include("*.jar")
-    include("misc/*.properties")
-
-    include("org/intellij/**")
-    include("com/intellij/**")
-    include("org/jetbrains/**")
-
-    include("org/picocontainer/**")
-    include("it/unimi/**")
-    include("org/jdom/**")
-    include("com/github/benmanes/**")
-
-    include("messages/*.properties")
-    include("gnu/**")
+    // Bundle everything from the shadow classpath except packages the converter
+    // never touches and JAR metadata that breaks verification when merged.
+    exclude("META-INF/*.SF")
+    exclude("META-INF/*.DSA")
+    exclude("META-INF/*.RSA")
+    exclude("META-INF/*.EC")
+    exclude("**/module-info.class")
+    exclude("io/grpc/**")
+    exclude("io/netty/**")
+    exclude("io/ktor/**")
+    exclude("io/opentelemetry/**")
+    exclude("com/amazon/**")
+    exclude("org/bouncycastle/**")
+    exclude("javaslang/**")
+    exclude("groovy/**")
+    exclude("groovyjarjar*/**")
+    exclude("net/rubygrapefruit/**")
+    exclude("win32-*/**")
+    exclude("darwin-*/**")
+    exclude("linux-x86-64/**")
+    exclude("linux-aarch64/**")
+    exclude("com/jetbrains/rd/**")
+    exclude("org/roaringbitmap/**")
 }
 
 tasks.jar {
