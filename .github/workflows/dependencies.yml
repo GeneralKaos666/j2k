@@ -23,6 +23,10 @@ jobs:
           distribution: 'zulu'
           java-version: 21
       - uses: gradle/actions/dependency-submission@v3
+        # Forks can have the dependency graph disabled, and it can only be turned
+        # on in the repository settings; keep the snapshot non-blocking so CI does
+        # not fail for a missing repository setting.
+        continue-on-error: true
 
   dependency-review:
     runs-on: ubuntu-latest
