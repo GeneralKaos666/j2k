@@ -308,9 +308,26 @@ public class J2KConverter : AutoCloseable {
     }
 
     override fun close() {
-        Extensions.setRootArea(Extensions.getRootArea() as ExtensionsAreaImpl, disposer)
-        Disposer.dispose(disposer)
+        // IntelliJ keeps the extension area in a process-global static and restores
+        // the previous one when the application environment is disposed. That restore
+        // runs before FileBasedIndexImpl's shutdown task, so shutdown cannot find
+        // FileBasedIndexInfrastructureExtension and DefaultLogger reports it as an
+        // AssertionError. The resources are still released; only the shutdown
+        // complaint is dropped.
+        try {
+            Extensions.setRootArea(Extensions.getRootArea() as ExtensionsAreaImpl, disposer)
+            Disposer.dispose(disposer)
+        } catch (error: AssertionError) {
+            if (!error.isIndexShutdownFailure()) throw error
+        }
     }
+
+    private fun AssertionError.isIndexShutdownFailure(): Boolean =
+        generateSequence<Throwable>(this) { it.cause }
+            .any { cause ->
+                val message = cause.message ?: return@any false
+                message == "Problems during index shutdown" || message.contains("Failed to unload:")
+            }
 }
 
 private class FakeScriptConfigurationManager : ScriptConfigurationManager {

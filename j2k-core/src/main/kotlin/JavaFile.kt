@@ -10,7 +10,7 @@ public class JavaFile(
     public val fileName: String = packageName.replace(".", "/") + "/$name.java"
 }
 
-public class KotlinFile(
+public data class KotlinFile(
     public val name: String,
     public val packageName: String,
     @Language("kotlin") public val content: String,
