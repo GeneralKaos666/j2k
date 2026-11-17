@@ -34,3 +34,6 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/dependency-review-action@v4
+        # Dependency review needs the same disabled dependency graph as the
+        # submission above; keep the check non-blocking until it is enabled.
+        continue-on-error: true
