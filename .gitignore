@@ -1,4 +1,7 @@
 .idea
 .gradle
+.kotlin
 build
 kls_database.db
+.deja/
+AGENTS.md
