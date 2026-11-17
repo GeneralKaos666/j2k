@@ -25,6 +25,7 @@ import com.intellij.openapi.vfs.AsyncFileListener
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.newvfs.*
 import com.intellij.openapi.vfs.newvfs.persistent.*
+import com.intellij.util.concurrency.AppExecutorUtil
 import com.intellij.psi.*
 import com.intellij.psi.impl.java.stubs.index.JavaFullClassNameIndex
 import com.intellij.psi.search.GlobalSearchScope
@@ -319,6 +320,20 @@ public class J2KConverter : AutoCloseable {
             Disposer.dispose(disposer)
         } catch (error: AssertionError) {
             if (!error.isIndexShutdownFailure()) throw error
+        }
+    }
+
+    public companion object {
+        /**
+         * Stops the shared IntelliJ executors that [close] leaves running.
+         *
+         * The platform creates those threads with `Executors.privilegedThreadFactory`,
+         * so they are not daemons and keep a standalone JVM alive after the last
+         * converter is closed. Call this once the whole conversion work is done: after
+         * it, no [J2KConverter] can be created again in the same process.
+         */
+        public fun shutdownPlatform() {
+            AppExecutorUtil.shutdownApplicationScheduledExecutorService()
         }
     }
 
