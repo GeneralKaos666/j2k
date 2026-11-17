@@ -1,6 +1,6 @@
 plugins {
     id("setup")
-    id("com.github.johnrengelman.shadow")
+    id("com.gradleup.shadow")
 }
 
 dependencies {
